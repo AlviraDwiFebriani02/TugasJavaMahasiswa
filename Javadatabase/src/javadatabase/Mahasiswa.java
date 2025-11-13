@@ -4,6 +4,9 @@
  */
 package javadatabase;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
@@ -92,4 +95,57 @@ public class Mahasiswa {
             e.printStackTrace();
         }
     }
+    public static void importFromCSV(File file) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            int lineNo = 0;
+            int inserted = 0;
+
+            while ((line = br.readLine()) != null) {
+                lineNo++;
+                line = line.trim();
+                if (line.isEmpty()) continue;
+
+                // skip header
+                if (lineNo == 1 && line.toLowerCase().contains("nama")) continue;
+
+                String[] data = line.split(",");
+                if (data.length < 2) {
+                    System.out.println("Baris " + lineNo + " tidak valid: " + line);
+                    continue;
+                }
+
+                String nama = data[0].trim();
+                String nim = data[1].trim();
+
+                Mahasiswa m = new Mahasiswa(nama, nim);
+                m.insert();
+                inserted++;
+            }
+
+            JOptionPane.showMessageDialog(null,
+                "Upload CSV selesai! Data ditambahkan: " + inserted + " baris.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Gagal membaca file CSV: " + e.getMessage());
+        }
+    }
+
+    private void insert(){
+    try {
+        Connection con = DbConnection.connect();
+        PreparedStatement pst = con.prepareStatement(
+            "INSERT INTO mahasiswa (nama, nim) VALUES (?, ?)"
+        );
+        pst.setString(1, this.nama);
+        pst.setString(2, this.nim);
+        pst.executeUpdate();
+        pst.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Gagal menambahkan data: " + e.getMessage());
+    }
+}
+
 }

@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package javadatabase;
 
@@ -13,89 +14,154 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Ahmad Yusuf
+ * @author HaRIS
  */
-public class Mahasiswa {
-    int id;
-    String nim;
-    String nama;
-    
-    int tahunMasuk;
-    Connection con;
-    
-    Mahasiswa(int id, String nim, String nama, int tahunMasuk){
+public class MAHASISWA {
+  private String nim,nama;
+  private int id;
+  private int sks;
+  private String jenis_mahasiswa;
+  private double biaya_kuliah;
+  
+  
+  MAHASISWA (){  
+  }
+  
+  MAHASISWA (String nama, String nim, String jenis_mahasiswa, int sks){
+      this.nim = nim;
+      this.nama = nama;
+      this.jenis_mahasiswa = jenis_mahasiswa;
+      this.sks = sks;
+  }
+  
+  public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
-        this.nama = nama;
-        this.nim = nim;
-        this.tahunMasuk = tahunMasuk;
-        
-        con = DbConnection.connect();
     }
-    
-    Mahasiswa(String nim, String nama, int tahunMasuk){
-        this.nama = nama;
-        this.nim = nim;
-        this.tahunMasuk = tahunMasuk;
+
+    public String getNim() {
+        return nim;
     }
-    
-    public Mahasiswa (String nama, String nim){
+
+    public void setNim(String nim) {
         this.nim = nim;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
         this.nama = nama;
     }
-    public void tambah (){
-        try {
+
+    public String getJenis_mahasiswa() {
+        return jenis_mahasiswa;
+    }
+
+    public void setJenis_mahasiswa(String jenis_mahasiswa) {
+        this.jenis_mahasiswa = jenis_mahasiswa;
+    }
+
+    public int getSks() {
+        return sks;
+    }
+
+    public void setSks(int sks) {
+        this.sks = sks;
+    }
+
+    public double getBiaya_Kuliah() {
+        return biaya_kuliah;
+    }
+
+    public void setBiaya_Kuliah(double biaya_kuliah) {
+        this.biaya_kuliah = biaya_kuliah;
+    }
+  
+  public double hitungBiayaKuliah() {
+    return 0; 
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  public void insert (){
+       try {
             Connection con = DbConnection.connect();
             PreparedStatement pst = con.prepareStatement(
-                    "INSERT INTO mahasiswa (nim, nama) VALUES (?, ?)"
+                "INSERT INTO mahasiswa (nama, nim, jenis_mahasiswa, sks, biaya_kuliah) VALUES (?, ?, ?, ?, ?)"
             );
-            pst.setString(1, nim);
-            pst.setString(2, nama);
+            pst.setString(1, getNama());
+            pst.setString(2, getNim());
+            pst.setString(3, getJenis_mahasiswa());
+            pst.setInt(4, getSks());
+            pst.setDouble(5, getBiaya_Kuliah());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil ditambahkan!");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    public Mahasiswa (int id){
-        this.id = id;
-    }
-    public void hapus (){
+  }
+  
+  public  MAHASISWA (int id){
+      this.id = id;
+  }
+  
+  public void delete (){
         try {
-            Connection con = (Connection) DbConnection.connect();            
-            
-           PreparedStatement pst = con.prepareStatement("DELETE FROM mahasiswa WHERE id=?");
+            Connection con = DbConnection.connect();
+            PreparedStatement pst = con.prepareStatement("DELETE FROM mahasiswa WHERE id=?");
             pst.setInt(1, id);
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil dihapus!");
-          
+     //       loadData();
         } catch (Exception e) {
             e.printStackTrace();
         }
+  }
+  
+    public MAHASISWA (int id, String nim, String nama){
+      this.id = id;
+      this.nama = nama;
+      this.nim = nim;
+  }
+ public void update() {
+    try {
+        Connection con = DbConnection.connect();
+        PreparedStatement pst = con.prepareStatement(
+            "UPDATE mahasiswa SET nama=?, nim=?, jenis_mahasiswa=?, sks=? WHERE id=?"
+        );
+        pst.setString(1, nama);                  
+        pst.setString(2, nim);                 
+        pst.setString(3, jenis_mahasiswa);     
+        pst.setInt(4, sks);                     
+        pst.setInt(5, id);                      
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Data berhasil diedit!");
+    } catch (Exception e) {
+        e.printStackTrace();
     }
-    
-    public Mahasiswa (int id, String nama, String nim){
-        this.id = id;
-        this.nama = nama;
-        this.nim = nim;
-    }
-    
-    public void edit (){
-        try {
-            Connection con = DbConnection.connect();
-            PreparedStatement pst = con.prepareStatement(
-                "UPDATE mahasiswa SET nim=?, nama=? WHERE id=?"
-            );
-            pst.setString(1, nim);
-            pst.setString(2, nama);
-            pst.setInt(3, id);
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Data berhasil diedit!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public static void importFromCSV(File file) {
+}
+
+  
+  MAHASISWA (String nama, String nim){
+     // this.id =id;
+      this.nim = nim;
+      this.nama = nama;
+  }
+  
+  public static void importFromCSV(File file) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             int lineNo = 0;
@@ -118,12 +184,12 @@ public class Mahasiswa {
                 String nama = data[0].trim();
                 String nim = data[1].trim();
 
-                Mahasiswa m = new Mahasiswa(nama, nim);
+               MAHASISWA m = new MAHASISWA(nama, nim);
                 m.insert();
                 inserted++;
             }
 
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(null, 
                 "Upload CSV selesai! Data ditambahkan: " + inserted + " baris.");
 
         } catch (Exception e) {
@@ -131,21 +197,5 @@ public class Mahasiswa {
             JOptionPane.showMessageDialog(null, "Gagal membaca file CSV: " + e.getMessage());
         }
     }
-
-    private void insert(){
-    try {
-        Connection con = DbConnection.connect();
-        PreparedStatement pst = con.prepareStatement(
-            "INSERT INTO mahasiswa (nama, nim) VALUES (?, ?)"
-        );
-        pst.setString(1, this.nama);
-        pst.setString(2, this.nim);
-        pst.executeUpdate();
-        pst.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Gagal menambahkan data: " + e.getMessage());
-    }
 }
 
-}

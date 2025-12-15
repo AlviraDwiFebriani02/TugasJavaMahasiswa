@@ -3,10 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package javadatabase;
-<<<<<<< HEAD
-=======
 
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 import java.util.*;
@@ -15,37 +12,28 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-<<<<<<< HEAD
-=======
-
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
 
 /**
  *
  *
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+
     DefaultTableModel modelMahasiswa;
     boolean isEdit;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-<<<<<<< HEAD
         modelMahasiswa = new DefaultTableModel(
                 new String[]{"ID", "Nama", "NIM", "Jenis_Mahasiswa", "SKS", "Biaya Kuliah"}, 0);
-=======
-        modelMahasiswa = new DefaultTableModel(      
-        new String[]{"ID", "Nama", "NIM", "Jenis_Mahasiswa", "SKS", "Biaya Kuliah"}, 0);
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
         tblMahasiswa.setModel(modelMahasiswa);
         isEdit = false;
         loadData();
         loadJenisMahasiswa();
         txt_biayaKuliah.setEditable(false);
-<<<<<<< HEAD
     }
 
     private void loadJenisMahasiswa() {
@@ -57,17 +45,14 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void hitungBiaya() {
-
         if (cmb_jenisMahasiswa.getSelectedIndex() == 0) {
             txt_biayaKuliah.setText("");
             return;
         }
-
         if (txt_sks.getText().isEmpty()) {
             txt_biayaKuliah.setText("");
             return;
         }
-
         String jenis = cmb_jenisMahasiswa.getSelectedItem().toString();
         int sks = Integer.parseInt(txt_sks.getText());
 
@@ -87,52 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         double biaya = m.hitungBiayaKuliah();
         txt_biayaKuliah.setText(String.valueOf(biaya));
-=======
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
     }
-         
-        private void loadJenisMahasiswa() {
-        cmb_jenisMahasiswa.removeAllItems();
-        cmb_jenisMahasiswa.addItem("Pilih Jenis Mahasiswa");
-        cmb_jenisMahasiswa.addItem("Reguler");
-        cmb_jenisMahasiswa.addItem("Beasiswa");
-        cmb_jenisMahasiswa.addItem("Internasional");
-}
-        
-        private void hitungBiaya() {
-
-    
-    if (cmb_jenisMahasiswa.getSelectedIndex() == 0) {
-        txt_biayaKuliah.setText("");
-        return;
-    }
-
-    
-    if (txt_sks.getText().isEmpty()) {
-        txt_biayaKuliah.setText("");
-        return;
-    }
-
-    String jenis = cmb_jenisMahasiswa.getSelectedItem().toString();
-    int sks = Integer.parseInt(txt_sks.getText());
-
-    MAHASISWA m;
-
-    switch (jenis) {
-        case "Reguler":
-            m = new MahasiswaReguler("", "", sks);
-            break;
-        case "Beasiswa":
-            m = new MahasiswaBeasiswa("", "", sks);
-            break;
-        default:
-            m = new MahasiswaInternasional("", "", sks);
-            break;
-    }
-
-    double biaya = m.hitungBiayaKuliah();
-    txt_biayaKuliah.setText(String.valueOf(biaya));
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -326,16 +266,11 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         String nama = txtNama.getText();
-<<<<<<< HEAD
         String nim = txtNim.getText();
-=======
-        String nim  = txtNim.getText();
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
         int sks = Integer.parseInt(txt_sks.getText());
         String jenis = cmb_jenisMahasiswa.getSelectedItem().toString();
         MAHASISWA m;
         switch (jenis) {
-<<<<<<< HEAD
             case "Reguler":
                 m = new MahasiswaReguler(nama, nim, sks);
                 break;
@@ -350,49 +285,17 @@ public class MainFrame extends javax.swing.JFrame {
         }
         double biaya = m.hitungBiayaKuliah();
         m.setBiaya_Kuliah(biaya);
+
         m.insert();
         loadData();
-=======
-    case "Reguler":
-        m = new MahasiswaReguler(nama, nim, sks);
-        break;
-
-    case "Beasiswa":
-        m = new MahasiswaBeasiswa(nama, nim, sks);
-        break;
-
-    default:
-        m = new MahasiswaInternasional(nama, nim, sks);
-        break;
-}
-        double biaya = m.hitungBiayaKuliah();
-        m.setBiaya_Kuliah(biaya);
-
-        m.insert();       
-        loadData();      
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         int row = tblMahasiswa.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Pilih data dulu!");
-            return; }
-        DefaultTableModel m = (DefaultTableModel) tblMahasiswa.getModel();
-        int id = Integer.parseInt(m.getValueAt(row, 0).toString());
-        MAHASISWA m1= new MAHASISWA (id);
-        m1.delete();
-        loadData ();       
-    }//GEN-LAST:event_btnHapusActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-  int row = tblMahasiswa.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Pilih data dulu!");
             return;
         }
-<<<<<<< HEAD
         DefaultTableModel m = (DefaultTableModel) tblMahasiswa.getModel();
         int id = Integer.parseInt(m.getValueAt(row, 0).toString());
         MAHASISWA m1 = new MAHASISWA(id);
@@ -412,7 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
         String nim = txtNim.getText();
         String jenis = cmb_jenisMahasiswa.getSelectedItem().toString();
         int sks = Integer.parseInt(txt_sks.getText());
-        MAHASISWA m2 = new MAHASISWA (id);
+        MAHASISWA m2 = new MAHASISWA(id);
         m2.setNama(nama);
         m2.setNim(nim);
         m2.setJenis_mahasiswa(jenis);
@@ -433,21 +336,10 @@ public class MainFrame extends javax.swing.JFrame {
         m2.update();
         loadData();
         JOptionPane.showMessageDialog(this, "Data berhasil diperbarui!");
-=======
-        DefaultTableModel m = (DefaultTableModel) tblMahasiswa.getModel();       
-        int id = Integer.parseInt(m.getValueAt(row, 0).toString());    
-        String nama = txtNama.getText();
-        String nim = txtNim.getText();      
-        MAHASISWA m2 = new MAHASISWA (id,nim,nama);
-        m2.update();
-        System.out.println("debug loaddata berhasil dipanggil");
-        loadData ();       
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void tblMahasiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMahasiswaMouseClicked
         // TODO add your handling code here:
-<<<<<<< HEAD
         int row = tblMahasiswa.getSelectedRow();
         if (row == -1) {
             return;
@@ -463,23 +355,10 @@ public class MainFrame extends javax.swing.JFrame {
         cmb_jenisMahasiswa.setSelectedItem(jenis);
         txt_sks.setText(sks);
         txt_biayaKuliah.setText(biaya);
-
-=======
-          int row = tblMahasiswa.getSelectedRow();
-            if (row == -1) {
-                return;
-            }
-    DefaultTableModel m = (DefaultTableModel) tblMahasiswa.getModel();
-    String nama = m.getValueAt(row, 1).toString();  
-    String nim = m.getValueAt(row, 2).toString();   
-    txtNama.setText(nama);
-    txtNim.setText(nim);
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
     }//GEN-LAST:event_tblMahasiswaMouseClicked
 
     private void btnCsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCsvActionPerformed
         // TODO add your handling code here:                                
-<<<<<<< HEAD
         JFileChooser chooser = new JFileChooser();
         int result = chooser.showOpenDialog(this);
         if (result != JFileChooser.APPROVE_OPTION) {
@@ -509,15 +388,16 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         hitungBiaya();
     }//GEN-LAST:event_txt_sksKeyReleased
-    private void txtNamaActionPerformed(java.awt.event.ActionEvent evt) {
+    private void txtNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaActionPerformed
         // TODO add your handling code here:
-    }
+    }//GEN-LAST:event_txtNamaActionPerformed
 
-    private void txtNimActionPerformed(java.awt.event.ActionEvent evt) {
+    private void txtNimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNimActionPerformed
         // TODO add your handling code here:
-    }
+    }//GEN-LAST:event_txtNimActionPerformed
 
-    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        // TODO add your handling code here:
         clear();
     }
 
@@ -552,59 +432,7 @@ public class MainFrame extends javax.swing.JFrame {
         tblMahasiswa.clearSelection();
         isEdit = false;
     }
-=======
-    JFileChooser chooser = new JFileChooser();
-    int result = chooser.showOpenDialog(this);
-    if (result != JFileChooser.APPROVE_OPTION) {
-        return;
-    }
 
-    File file = chooser.getSelectedFile();
-    if (file == null || !file.exists()) {
-        JOptionPane.showMessageDialog(this, "File tidak ditemukan!");
-        return;
-    }
-    MAHASISWA.importFromCSV(file);
-      loadData();
-    }//GEN-LAST:event_btnCsvActionPerformed
->>>>>>> 2f1ab06585c65692d25b75373725a706d33e93e5
-
-    private void cmb_jenisMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_jenisMahasiswaActionPerformed
-        // TODO add your handling code here:
-       hitungBiaya();
-    }//GEN-LAST:event_cmb_jenisMahasiswaActionPerformed
-
-    private void cmb_jenisMahasiswaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmb_jenisMahasiswaKeyReleased
-        // TODO add your handling code here:
-        hitungBiaya();
-    }//GEN-LAST:event_cmb_jenisMahasiswaKeyReleased
-
-    private void txt_sksKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_sksKeyReleased
-        // TODO add your handling code here:
-        hitungBiaya();
-    }//GEN-LAST:event_txt_sksKeyReleased
- 
-    private void loadData(){
-        modelMahasiswa.setRowCount(0);
-            try {
-                Connection con = DbConnection.connect();
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM mahasiswa ORDER BY id ASC");
-
-                while (rs.next()) {
-                    modelMahasiswa.addRow(new Object[]{
-                        rs.getInt("id"),         
-                        rs.getString("nama"),     
-                        rs.getString("nim") ,  
-                        rs.getString("jenis_mahasiswa"), 
-                        rs.getInt("sks"),                
-                        rs.getDouble("biaya_kuliah") 
-                    });
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            } 
-    }
     /**
      * @param args the command line arguments
      */
